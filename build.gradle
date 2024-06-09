@@ -29,7 +29,7 @@ tasks.named('test') {
 }
 
 tasks.named('bootJar') {
-    mainClass.set('com.example.sample1app.Sample1appApplication')
+    mainClassName = 'com.example.sample1app.Sample1appApplication'
 }
 
 tasks.withType(JavaCompile) {
