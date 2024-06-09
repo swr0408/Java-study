@@ -11,7 +11,7 @@ COPY . /home/gradle/project
 WORKDIR /home/gradle/project
 
 # Gradleを使ってクリーンビルドを実行
-RUN gradle clean build -Dorg.gradle.java.home=$JAVA_HOME
+RUN gradle bootJar -Dorg.gradle.java.home=$JAVA_HOME
 
 # 新しいステージでEclipse Temurin 17 JDKを使用
 FROM eclipse-temurin:17-alpine
