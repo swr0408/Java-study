@@ -35,7 +35,7 @@ public class HelloController {
   @RequestMapping(value = "/find", method = RequestMethod.GET)
   public ModelAndView index(ModelAndView mav) {
     mav.setViewName("find");
-    mav.addObject("msg", "Personのサンプルです。");
+    mav.addObject("msg", "Name search");
     Iterable<Person> list = dao.getAll();
     mav.addObject("data", list);
     return mav;
@@ -57,8 +57,8 @@ public class HelloController {
   @RequestMapping("/")
   public ModelAndView index(@ModelAttribute("formModel") Person person, ModelAndView mav) {
     mav.setViewName("index");
-    mav.addObject("title", "個人情報名簿");
-    mav.addObject("msg", "※サンプルです");
+    mav.addObject("title", "名簿管理");
+    mav.addObject("msg", "URLの後ろに/findを付けると名前検索画面。/page/{ID}でページごとの検索。/edit/{ID}で個人情報の編集。/delete/{ID}で個人情報の削除が行えます。");
     List<Person> list = repository.findAllOrderByName();
     mav.addObject("data", list);
     return mav;
