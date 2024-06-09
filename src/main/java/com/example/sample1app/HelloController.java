@@ -97,7 +97,7 @@ public class HelloController {
   @RequestMapping(value = "/page/{page}", method = RequestMethod.GET)
   public ModelAndView index(ModelAndView mav, @PathVariable("page") int page) {
     mav.setViewName("find");
-    mav.addObject("msg", "Personのサンプルです。");
+    mav.addObject("msg", "Page search");
     int num = 2;
     Iterable<Person> list = dao.getPage(page, num);
     mav.addObject("data", list);
@@ -129,7 +129,7 @@ public class HelloController {
   @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
   public ModelAndView edit(@ModelAttribute Person person, @PathVariable("id") int id, ModelAndView mav) {
     mav.setViewName("edit");
-    mav.addObject("title", "edit Person.");
+    mav.addObject("title", "Edit Person.");
     Optional<Person> data = repository.findById((long) id);
     mav.addObject("formModel", data.get());
     return mav;
