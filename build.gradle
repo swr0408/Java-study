@@ -6,10 +6,7 @@ plugins {
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-
-java {
-    sourceCompatibility = '17'
-}
+sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
@@ -27,15 +24,11 @@ dependencies {
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
 }
 
-tasks.named('bootBuildImage') {
-    builder = 'paketobuildpacks/builder-jammy-base:latest'
-}
-
 tasks.named('test') {
     useJUnitPlatform()
 }
 
-springBoot {
+tasks.named('bootJar') {
     mainClass.set('com.example.sample1app.Sample1appApplication')
 }
 
