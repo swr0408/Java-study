@@ -14,7 +14,7 @@ WORKDIR /home/gradle/project
 RUN echo "org.gradle.java.home=/opt/java/openjdk" >> /home/gradle/project/gradle.properties
 
 # Gradleを使ってクリーンビルドを実行
-RUN gradle bootJar
+RUN gradle clean build -x test
 
 # 新しいステージでEclipse Temurin 17 JDKを使用
 FROM eclipse-temurin:17-alpine
