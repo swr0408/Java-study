@@ -1,18 +1,23 @@
-# MavenおよびEclipse Temurin 17 JDKを使用してビルドステージを設定
-FROM maven:3-eclipse-temurin-17 AS build
+# GradleとEclipse Temurin 17 JDKを使用してビルドステージを設定
+FROM gradle:7.6.0-jdk17 AS build
 
-# ソースコードとpom.xmlをビルドステージにコピー
-COPY src /usr/src/app/src
-COPY pom.xml /usr/src/app
+# 環境変数JAVA_HOMEを設定
+ENV JAVA_HOME=/opt/java/openjdk
 
-# Mavenを使ってクリーンパッケージを実行（テストはスキップ）
-RUN mvn -f /usr/src/app/pom.xml clean package -Dmaven.test.skip=true
+# 現在のディレクトリの全てのファイルをビルドステージにコピー
+COPY . /home/gradle/project
+
+# ビルドディレクトリに移動
+WORKDIR /home/gradle/project
+
+# Gradleを使ってクリーンビルドを実行
+RUN gradle clean build -Dorg.gradle.java.home=$JAVA_HOME
 
 # 新しいステージでEclipse Temurin 17 JDKを使用
 FROM eclipse-temurin:17-alpine
 
 # 前のステージからビルドされたJARファイルをコピー
-COPY --from=build /usr/src/app/target/sample1app-0.0.1-SNAPSHOT.jar /usr/app/sample1app.jar
+COPY --from=build /home/gradle/project/build/libs/*.jar /usr/app/sample1app.jar
 
 # ポート8080を公開
 EXPOSE 8080
