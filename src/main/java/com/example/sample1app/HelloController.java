@@ -57,8 +57,8 @@ public class HelloController {
   @RequestMapping("/")
   public ModelAndView index(@ModelAttribute("formModel") Person person, ModelAndView mav) {
     mav.setViewName("index");
-    mav.addObject("title", "Hello page");
-    mav.addObject("msg", "this is JPA sample data");
+    mav.addObject("title", "個人情報名簿");
+    mav.addObject("msg", "※サンプルです");
     List<Person> list = repository.findAllOrderByName();
     mav.addObject("data", list);
     return mav;
