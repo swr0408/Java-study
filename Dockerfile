@@ -10,8 +10,11 @@ COPY . /home/gradle/project
 # ビルドディレクトリに移動
 WORKDIR /home/gradle/project
 
+# gradle.propertiesに環境変数を追加
+RUN echo "org.gradle.java.home=/opt/java/openjdk" >> /home/gradle/project/gradle.properties
+
 # Gradleを使ってクリーンビルドを実行
-RUN gradle bootJar -Dorg.gradle.java.home=$JAVA_HOME
+RUN gradle bootJar
 
 # 新しいステージでEclipse Temurin 17 JDKを使用
 FROM eclipse-temurin:17-alpine
