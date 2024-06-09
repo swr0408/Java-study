@@ -24,7 +24,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
 }
 
@@ -36,13 +35,10 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-tasks.withType(JavaCompile) {
-    options.compilerArgs += ['-parameters']
-}
-compileJava {
-    options.compilerArgs += ['-parameters']
+springBoot {
+    mainClass.set('com.example.sample1app.Sample1appApplication')
 }
 
-bootJar {
-    enabled = true
+tasks.withType(JavaCompile) {
+    options.compilerArgs += ['-parameters']
 }
