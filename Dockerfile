@@ -7,7 +7,7 @@ WORKDIR /home/gradle/project
 # Copy project files to the build context
 COPY . .
 
-# Set the Java home directory in gradle properties
+# Set the Java home directory in gradle.properties
 RUN echo "org.gradle.java.home=/opt/java/openjdk" >> gradle.properties
 
 # Build the application, excluding tests
