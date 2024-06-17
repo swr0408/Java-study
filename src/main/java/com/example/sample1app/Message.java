@@ -23,6 +23,8 @@ public class Message {
     @NotNull
     private long id;
 
+    private String memo; // メモ用のフィールドを追加
+
     @Column(nullable = false)
     @NotBlank
     private String content;
@@ -62,6 +64,14 @@ public class Message {
 
     public void setPerson (Person Person) {
         this.Person = Person;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
 }

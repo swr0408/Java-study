@@ -12,15 +12,16 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import jakarta.persistence.NamedQuery;
 import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.OneToMany;
+import javax.validation.constraints.*;
 
 @NamedQueries(
     @NamedQuery(name="findWithName", query = "from Person where name like :fname")
     )
-    @NamedQuery(name="findByAge", query = "from Person where age >= :min and age < :max")
 @Entity
 @Table(name="Person")
 public class Person {
@@ -43,20 +44,18 @@ public class Person {
     @NotNull
     private long id;
 
-    @Column(length = 50, nullable = false)
-    @NotBlank
+    @NotNull(message="名前は必須項目です")
+    @Size(min=1, message="名前は必須項目です")
     private String name;
 
-    @Column(length = 200, nullable = true)
-    @Email
+    @NotBlank(message="メールは必須項目です")
+    @Email(message = "メールアドレスの形式が正しくありません")
     private String mail;
 
-    @Column(nullable = true)
-    @Min(0)
-    @Max(200)
+    @NotNull(message="年齢を入力してください")
+    @Min(value = 0, message = "年齢は0以上でなければなりません")
     private Integer age;
 
-    @Column(nullable = true)
     private String memo;
 
     public long getId() {

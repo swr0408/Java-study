@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 
+import com.example.sample1app.repositories.MessageRepository;
 import com.example.sample1app.repositories.PersonRepository;
 
 import jakarta.transaction.Transactional;
@@ -23,14 +24,22 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.HttpServletRequest;
 
+import javax.validation.Valid;
+import java.time.LocalDateTime;
+import org.springframework.web.bind.annotation.*;
+
 @Controller
 public class HelloController {
 
   @Autowired
   PersonRepository repository;
+  @Autowired
+    private MessageRepository messageRepository;
 
   @Autowired
   PersonDAOPersonlmpl dao;
+
+  
 
   @RequestMapping(value = "/find", method = RequestMethod.GET)
   public ModelAndView index(ModelAndView mav) {
@@ -48,6 +57,11 @@ public class HelloController {
     if (param == "") {
       mav = new ModelAndView("redirect:/find");
     } else {
+      mav.addObject("title","Name search");
+      mav.addObject("msg", "「" + param + "」の検索結果");
+      mav.addObject("value", param);
+      // Person data = dao.findById(Integer,parseInt(param));
+      // Person[] list = new Person[] {data};
       List<Person> list = dao.find(param);
       mav.addObject("data", list);
     }
@@ -58,7 +72,7 @@ public class HelloController {
   public ModelAndView index(@ModelAttribute("formModel") Person person, ModelAndView mav) {
     mav.setViewName("index");
     mav.addObject("title", "名簿管理");
-    mav.addObject("msg", "URLの後ろに/findを付けると名前検索画面。/page/{ID}でページごとの検索。/edit/{ID}で個人情報の編集。/delete/{ID}で個人情報の削除が行えます。");
+    mav.addObject("msg", "URLの後ろに/findを付けると名前検索画面。/edit/{ID}で個人情報の編集。/delete/{ID}で個人情報の削除が行えます。/msgでメッセージの追加ができます。");
     List<Person> list = repository.findAllOrderByName();
     mav.addObject("data", list);
     return mav;
@@ -74,14 +88,15 @@ public class HelloController {
       res = new ModelAndView("redirect:/");
     } else {
       mav.setViewName("index");
-      mav.addObject("title", "Hello page");
-      mav.addObject("msg", "sorry, error is occurred.");
+      mav.addObject("title", "名簿管理");
+      mav.addObject("msg", "入力ミスがあります");
       Iterable<Person> list = repository.findAll();
       mav.addObject("datalist", list);
       res = mav;
     }
     return res;
   }
+  
 
   @RequestMapping(value = "/submitMemo", method = RequestMethod.POST)
   public ModelAndView submitMemo(@RequestParam("memo") String memo, ModelAndView mav) {
