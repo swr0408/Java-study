@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>top page</title>
+    <title>名簿管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -35,14 +35,14 @@
                 th:errors="*{age}" th:errorclass="err">
             </div>
         </div>
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label for="memo" class="form-label">Memo</label>
             <textarea class="form-control" th:errorclass="err"
             name="memo" th:text="*{memo}"></textarea>
             <div th:if="${#fields.hasErrors('memo')}"
                 th:errors="*{memo}" th:errorclass="err">
             </div>
-        </div>
+        </div> -->
         <input type="submit" class="btn btn-primary" value="Create"/>
     </form>
 
